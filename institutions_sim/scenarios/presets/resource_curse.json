@@ -1,0 +1,57 @@
+{
+  "name": "Resource Curse",
+  "description": "Oil-rich state trying to diversify before the wells run dry.",
+  "initial_state": {
+    "name": "Petrolavia",
+    "pop": 5000000,
+    "EI": 0.35,
+    "PI": 0.3,
+    "tech": 0.9,
+    "elite_share": 0.10,
+    "max_step": 0.08,
+    "factions": [
+      {
+        "id": "oil_elites",
+        "label": "Oil Elites",
+        "mass_share": 0.005,
+        "elite_share": 0.40,
+        "ei_stance": 0.3,
+        "pi_stance": 0.2,
+        "preferred_alloc": {"sec": 0.3, "tech": 0.3, "infra": 0.2, "pc": 0.1, "welfare": 0.1}
+      },
+      {
+        "id": "labour",
+        "label": "Labour Unions",
+        "mass_share": 0.20,
+        "elite_share": 0.02,
+        "ei_stance": 0.7,
+        "pi_stance": 0.65,
+        "preferred_alloc": {"sec": 0.1, "tech": 0.15, "infra": 0.2, "pc": 0.2, "welfare": 0.35}
+      }
+    ]
+  },
+  "sim_config": {
+    "resource_rent_share": 0.20,
+    "tax_rate": 0.18,
+    "coup_probability": 0.04
+  },
+  "events": [
+    {
+      "id": "oil_price_crash",
+      "trigger": {"month": 60},
+      "effect": {
+        "delta_unrest": 0.2,
+        "budget_inject": -2000000,
+        "message": "Global oil price crash — revenues collapse."
+      },
+      "once": true
+    }
+  ],
+  "win_conditions": [
+    {"type": "reach", "metric": "EI", "threshold": 0.65, "consecutive_months": 12}
+  ],
+  "lose_conditions": [
+    {"type": "reach", "metric": "unrest", "threshold": 0.85, "consecutive_months": 3}
+  ],
+  "max_months": 120
+}

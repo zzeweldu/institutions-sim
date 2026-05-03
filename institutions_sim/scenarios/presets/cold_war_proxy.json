@@ -1,0 +1,68 @@
+{
+  "name": "Cold War Proxy",
+  "description": "Democratic state under superpower pressure. Maintain institutions for 15 years.",
+  "initial_state": {
+    "name": "Libertas",
+    "pop": 6000000,
+    "EI": 0.65,
+    "PI": 0.60,
+    "tech": 1.2,
+    "elite_share": 0.08,
+    "max_step": 0.10,
+    "factions": [
+      {
+        "id": "democrats",
+        "label": "Democratic Party",
+        "mass_share": 0.30,
+        "elite_share": 0.20,
+        "ei_stance": 0.75,
+        "pi_stance": 0.70,
+        "preferred_alloc": {"sec": 0.15, "tech": 0.25, "infra": 0.20, "pc": 0.20, "welfare": 0.20}
+      },
+      {
+        "id": "hawks",
+        "label": "Security Hawks",
+        "mass_share": 0.05,
+        "elite_share": 0.30,
+        "ei_stance": 0.5,
+        "pi_stance": 0.45,
+        "preferred_alloc": {"sec": 0.45, "tech": 0.20, "infra": 0.15, "pc": 0.10, "welfare": 0.10}
+      }
+    ]
+  },
+  "sim_config": {
+    "coup_probability": 0.03,
+    "protest_base": 0.04,
+    "base_invade": 0.001,
+    "tax_rate": 0.22
+  },
+  "events": [
+    {
+      "id": "proxy_funding",
+      "trigger": {"month": 12},
+      "effect": {
+        "budget_inject": 3000000,
+        "message": "Superpower proxy funding received."
+      },
+      "once": true
+    },
+    {
+      "id": "coup_attempt_external",
+      "trigger": {"condition": "month == 36"},
+      "effect": {
+        "delta_PI": -0.15,
+        "delta_unrest": 0.20,
+        "message": "Externally-backed coup attempt destabilizes government."
+      },
+      "once": true
+    }
+  ],
+  "win_conditions": [
+    {"type": "reach", "metric": "EI", "threshold": 0.8, "consecutive_months": 6},
+    {"type": "reach", "metric": "PI", "threshold": 0.75, "consecutive_months": 6}
+  ],
+  "lose_conditions": [
+    {"type": "reach", "metric": "unrest", "threshold": 0.80, "consecutive_months": 3}
+  ],
+  "max_months": 180
+}

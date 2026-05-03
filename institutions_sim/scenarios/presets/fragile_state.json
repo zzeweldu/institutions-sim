@@ -1,0 +1,68 @@
+{
+  "name": "Fragile State",
+  "description": "Autocratic state under pressure. Survive 10 years without collapse.",
+  "initial_state": {
+    "name": "Autocratia",
+    "pop": 8000000,
+    "EI": 0.2,
+    "PI": 0.15,
+    "tech": 0.8,
+    "elite_share": 0.06,
+    "max_step": 0.08,
+    "factions": [
+      {
+        "id": "military_council",
+        "label": "Military Council",
+        "mass_share": 0.01,
+        "elite_share": 0.25,
+        "ei_stance": 0.2,
+        "pi_stance": 0.1,
+        "preferred_alloc": {"sec": 0.5, "tech": 0.2, "infra": 0.1, "pc": 0.1, "welfare": 0.1}
+      },
+      {
+        "id": "reform_movement",
+        "label": "Reform Movement",
+        "mass_share": 0.15,
+        "elite_share": 0.05,
+        "ei_stance": 0.8,
+        "pi_stance": 0.75,
+        "preferred_alloc": {"sec": 0.1, "tech": 0.2, "infra": 0.2, "pc": 0.2, "welfare": 0.3}
+      }
+    ]
+  },
+  "sim_config": {
+    "coup_probability": 0.08,
+    "protest_base": 0.10,
+    "tax_rate": 0.25,
+    "disaster_base": 0.05
+  },
+  "events": [
+    {
+      "id": "oil_discovery",
+      "trigger": {"month": 24},
+      "effect": {
+        "budget_inject": 5000000,
+        "delta_tech": 0.05,
+        "message": "Oil discovered! Windfall revenue."
+      },
+      "once": true
+    },
+    {
+      "id": "drought",
+      "trigger": {"condition": "month == 48"},
+      "effect": {
+        "delta_unrest": 0.15,
+        "delta_infra": -0.1,
+        "message": "Severe drought hits agricultural sector."
+      },
+      "once": true
+    }
+  ],
+  "win_conditions": [
+    {"type": "reach", "metric": "EI", "threshold": 0.6, "consecutive_months": 6}
+  ],
+  "lose_conditions": [
+    {"type": "reach", "metric": "unrest", "threshold": 0.9, "consecutive_months": 3}
+  ],
+  "max_months": 120
+}
