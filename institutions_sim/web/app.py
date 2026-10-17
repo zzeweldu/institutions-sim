@@ -13,7 +13,7 @@ from .callbacks import register_callbacks
 def create_app(debug: bool = False) -> dash.Dash:
     app = dash.Dash(
         __name__,
-        external_stylesheets=[dbc.themes.CYBORG],
+        assets_folder=str(Path(__file__).parent / "assets"),
         title="institutions-sim",
         suppress_callback_exceptions=True,
         meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
